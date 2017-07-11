@@ -13,6 +13,7 @@ import android.support.v7.widget.SearchView;
 import com.example.chenminyao.hootsuiteassignment.BR;
 import com.example.chenminyao.hootsuiteassignment.Binding.ItemBinder;
 import com.example.chenminyao.hootsuiteassignment.Binding.ItemBinderBase;
+import com.example.chenminyao.hootsuiteassignment.Binding.ReplyCommand;
 import com.example.chenminyao.hootsuiteassignment.Model.ApiBuilder;
 import com.example.chenminyao.hootsuiteassignment.Model.ConfigurationData;
 import com.example.chenminyao.hootsuiteassignment.Model.MovieApi;
@@ -34,19 +35,11 @@ public class MainActivityViewModel extends BaseObservable {
     public ItemBinder<MovieItemViewModel> movieItemView() {
         return new ItemBinderBase<MovieItemViewModel>(BR.itemVM, R.layout.recycler_item_view);
     }
-    public SearchView.OnQueryTextListener listener = new SearchView.OnQueryTextListener() {
-        @Override
-        public boolean onQueryTextSubmit(String query) {
-            itemList.clear();
-            loadData(query, 1);
-            return true;
-        }
 
-        @Override
-        public boolean onQueryTextChange(String newText) {
-            return false;
-        }
-    };
+    public final ReplyCommand<String> textSubmitCommand = new ReplyCommand<String>(s -> {
+        itemList.clear();
+        loadData(s, 1);
+    });
 
     private Context context;
     String apiKey;

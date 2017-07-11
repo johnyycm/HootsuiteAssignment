@@ -44,16 +44,19 @@ public class MyBindingAdapter {
     }
 
     @BindingAdapter("textSubmit")
-    public static void textSubmit(SearchView searchView, SearchView.OnQueryTextListener listener){
-        searchView.setOnQueryTextListener(listener);
-    }
+    public static void textSubmit(SearchView searchView, ReplyCommand<String> textSubmitCommand){
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                textSubmitCommand.execute(query);
+                searchView.clearFocus();
+                return false;
+            }
 
-    @SuppressWarnings("unchecked")
-    @BindingAdapter({"onLoadMoreCommand"})
-    public static<T> void onLoadMoreCommand(final RecyclerView recyclerView, Observable observable) {
-        BindingRecyclerViewAdapter<T> adapter = (BindingRecyclerViewAdapter<T>) recyclerView.getAdapter();
-        int itemLeft = adapter.getItemLeft().get();
-//        if(itemLeft>7)
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                return false;
+            }
+        });
     }
-
 }

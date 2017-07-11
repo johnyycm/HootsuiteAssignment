@@ -23,7 +23,6 @@ public class BindingRecyclerViewAdapter<T> extends RecyclerView.Adapter<BindingR
     private final WeakReferenceOnListChangedCallback onListChangedCallback;
     private final ItemBinder<T> itemBinder;
     private ObservableList<T> items;
-    private ObservableInt itemLeft = new ObservableInt(-1);
     private LayoutInflater inflater;
 
     public BindingRecyclerViewAdapter(ItemBinder<T> itemBinder, @Nullable Collection<T> items)
@@ -36,10 +35,6 @@ public class BindingRecyclerViewAdapter<T> extends RecyclerView.Adapter<BindingR
     public ObservableList<T> getItems()
     {
         return items;
-    }
-
-    public ObservableInt getItemLeft() {
-        return itemLeft;
     }
 
     public void setItems(@Nullable Collection<T> items)
@@ -98,7 +93,6 @@ public class BindingRecyclerViewAdapter<T> extends RecyclerView.Adapter<BindingR
     public void onBindViewHolder(ViewHolder viewHolder, int position)
     {
 
-        this.itemLeft.set(items.size()-position-1);
         final T item = items.get(position);
         viewHolder.binding.setVariable(itemBinder.getBindingVariable(item), item);
         viewHolder.binding.getRoot().setTag(ITEM_MODEL, item);
