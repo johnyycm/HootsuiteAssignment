@@ -29,6 +29,8 @@
             tools:itemView="@{mainActivityVM.movieItemView}"
             tools:items="@{mainActivityVM.itemList}"
             tools:layoutManager="@{mainActivityVM.layoutManager}"
+            tools:onLoadMoreCommand="@{mainActivityVM.onLoadMoreCommand}"
+
 
             />
     </LinearLayout>
